@@ -10,13 +10,12 @@ public class UserService {
 
     private final UserRepository userRepository;
 
-    // Spring Boot will auto-wire this single constructor for you
+
     @Autowired
     public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 
-    // no @Autowired here: just a plain business method
     public User findByUsername(String username) {
         return userRepository.findByUsername(username);
     }

@@ -17,11 +17,27 @@ public class AuthController {
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<User> signup(@RequestBody User user) {
+    public ResponseEntity<String> signup(@RequestBody User user) {
         User created = userService.createUser(user);
-        // return 201 Created
         return ResponseEntity
                 .status(HttpStatus.CREATED)
-                .body(created);
+                .body("User created!");
+
     }
+
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@RequestBody User user) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(user);
+    }
+
+    @PostMapping("/forgetpassword")
+    public ResponseEntity<?> forgetPassword(@RequestBody User user) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(user);
+    }
+
+    @PostMapping("/resetpassword")
+    public ResponseEntity<?> resetPassword(@RequestBody User user) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(user);
+    }
+
 }
