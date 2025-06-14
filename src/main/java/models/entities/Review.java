@@ -23,5 +23,5 @@ public class Review {
     private Course course;
     @ManyToOne
     @JoinColumn(referencedColumnName = "id")
-    private User user;
+    private User student;
 }

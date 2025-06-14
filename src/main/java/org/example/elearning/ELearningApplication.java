@@ -5,6 +5,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.mybatis.spring.annotation.MapperScan;
 
 @SpringBootApplication(scanBasePackages = {
         "contorllers",                // (1) your controller package
@@ -14,6 +15,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 })
 @EntityScan("models.entities")
 @EnableJpaRepositories("models.repositories")
+@MapperScan("controllerMapper")
 public class ELearningApplication
 {
 
