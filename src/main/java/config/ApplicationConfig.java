@@ -16,9 +16,7 @@ public class ApplicationConfig {
 
     private final UserRepository userRepository;
 
-    /* -------------------------------------------------------------- */
-    /*  Core beans: UserDetailsService + PasswordEncoder              */
-    /* -------------------------------------------------------------- */
+
     @Bean
     public UserDetailsService userDetailsService() {
         return username -> userRepository.findByEmail(username)
@@ -27,7 +25,7 @@ public class ApplicationConfig {
 
     @Bean
     public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();      // still the recommended default
+        return new BCryptPasswordEncoder();
     }
 
 }

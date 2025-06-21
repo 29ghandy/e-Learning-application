@@ -1,4 +1,3 @@
-// ────────── src/main/java/config/SecurityConfig.java ──────────
 package config;
 
 import lombok.RequiredArgsConstructor;
@@ -29,9 +28,7 @@ public class SecurityConfig {
     private final UserDetailsService userDetailsService;
     private final PasswordEncoder    passwordEncoder;
 
-    /* -------------------------------------------------------------- */
-    /*  DaoAuthenticationProvider (single instance)                   */
-    /* -------------------------------------------------------------- */
+
     @Bean
     public DaoAuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
@@ -40,18 +37,14 @@ public class SecurityConfig {
         return provider;
     }
 
-    /* -------------------------------------------------------------- */
-    /*  AuthenticationManager (single instance)                       */
-    /* -------------------------------------------------------------- */
+
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration cfg)
             throws Exception {
         return cfg.getAuthenticationManager();
     }
 
-    /* -------------------------------------------------------------- */
-    /*  Security filter chain                                         */
-    /* -------------------------------------------------------------- */
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
