@@ -3,6 +3,7 @@ package contorllers;
 import jakarta.validation.Valid;
 import models.entities.User;
 import models.services.UserService;
+import org.antlr.v4.runtime.misc.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,23 +28,13 @@ public class AuthController {
             if(result.hasErrors()) {
                 return ResponseEntity.badRequest().body("Data validation failed");
             }
-            User newUser = userService.findByEmail(body.getEmail());
-            if (newUser != null) {
-                return ResponseEntity
-                        .status(HttpStatus.IM_USED)
-                        .body("Email already exists");
-            }
 
 
-            User user = new User();
-            user.setEmail(body.getEmail());
-            user.setPassword(body.getPassword());
-            user.setUsername(body.getUsername());
-            user.setRole(User.Role.valueOf(body.getRole()));
-            User createdUser = userService.createUser(user);
+
+            String token = userService.createUser(body);
             return ResponseEntity
                     .status(HttpStatus.CREATED)
-                    .body("User created!");
+                    .body(token + " User created!");
         }
         catch (Exception e) {
             return ResponseEntity
@@ -54,7 +45,24 @@ public class AuthController {
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@Valid @RequestBody SignInRequest body, BindingResult result) {
-        return ResponseEntity.status(HttpStatus.CREATED).body("User logged in");
+       // check then create token and send it in the response
+       try {
+           if(result.hasErrors()) {
+               return ResponseEntity.badRequest().body("Data validation failed");
+           }
+           String token = userService.loginAndGenerateToken(body.getEmail(), body.getPassword());
+           if(token != null) {
+               Pair<String,String> pair = new Pair<>("User logged in", token);
+               return ResponseEntity.ok().body(pair);
+           }
+           return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("user name or password incorrect");
+       }
+       catch (Exception e) {
+           return ResponseEntity
+                   .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                   .body("server error occurred!");
+       }
+
     }
 
     @PostMapping("/forgetpassword")

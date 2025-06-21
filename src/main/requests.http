@@ -3,6 +3,7 @@ GET https://examples.http-client.intellij.net/get
     ?generated-in=IntelliJ IDEA
 
 ###
+# @no-cookie-jar
 POST http://localhost:8080/auth/signup
 Content-Type: application/json
 
@@ -10,6 +11,6 @@ Content-Type: application/json
 
   "username": "omar",
   "password": "1245adassdsad",
-  "email": "test45@test.com",
+  "email": "test45445@test.com",
   "role": "STUDENT"
 }
